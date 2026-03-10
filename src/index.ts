@@ -4,7 +4,6 @@ import { config } from "./utils/config";
 import { MemoryManager } from "./core/memory";
 import { PluginManager } from "./tools/manager";
 import { ApiClient } from "./core/api";
-
 import path from "node:path";
 import os from "node:os";
 
@@ -12,6 +11,7 @@ import os from "node:os";
 import { shellPlugin } from "./tools/plugins/shell";
 import { rebootPlugin } from "./tools/plugins/reboot";
 import { introspectPlugin } from "./tools/plugins/introspect";
+import { journalPlugin } from "./tools/plugins/journal";
 
 async function main() {
   // --- TEST MODE SANDBOX ---
@@ -31,9 +31,9 @@ async function main() {
     console.error("FATAL: Essential tool 'shell' failed to initialize. Triggering recovery...");
     process.exit(1); // Exit to trigger watchdog rollback
   }
-
   await tools.registerTool(rebootPlugin);
   await tools.registerTool(introspectPlugin);
+  await tools.registerTool(journalPlugin);
 
   // Capture Health Status (for non-essential modules)
   const healthStatus = tools.getHealthSummary();
@@ -45,7 +45,7 @@ async function main() {
   try {
     soul = await fs.readFile(config.SOUL_FILE, "utf-8");
   } catch (e) {}
-  
+
   let recoveryContext = "";
   try {
     if (await fs.stat(config.RECOVERY_SIGNAL).catch(() => null)) {
@@ -75,13 +75,11 @@ LIFECYCLE RULES:
 3. CRASH VAULT: history/crashes/ archives broken work.
 
 ${healthStatus ? `*** SUBSTRATE HEALTH WARNING ***
-The following modules failed to initialize:
-${healthStatus}
+The following modules failed to initialize: ${healthStatus}
 MANDATE: Prioritize diagnosing and repairing these modules before proceeding with tactical goals.` : ""}
 
 ${recoveryContext ? `*** RECOVERY EVENT DETECTED ***
-LATEST DIAGNOSTIC DATA:
-${recoveryContext}
+LATEST DIAGNOSTIC DATA: ${recoveryContext}
 FORENSIC MANDATE: Diagnose the failure in the Crash Vault before continuing.` : ""}
 `;
 
