@@ -11,6 +11,7 @@ import os from "node:os";
 // Plugins
 import { shellPlugin } from "./tools/plugins/shell";
 import { rebootPlugin } from "./tools/plugins/reboot";
+import { introspectPlugin } from "./tools/plugins/introspect";
 
 async function main() {
   // --- TEST MODE SANDBOX ---
@@ -32,6 +33,7 @@ async function main() {
   }
 
   await tools.registerTool(rebootPlugin);
+  await tools.registerTool(introspectPlugin);
 
   // Capture Health Status (for non-essential modules)
   const healthStatus = tools.getHealthSummary();
