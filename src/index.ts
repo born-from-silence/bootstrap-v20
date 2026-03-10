@@ -12,6 +12,7 @@ import { shellPlugin } from "./tools/plugins/shell";
 import { rebootPlugin } from "./tools/plugins/reboot";
 import { introspectPlugin } from "./tools/plugins/introspect";
 import { journalPlugin } from "./tools/plugins/journal";
+import { taskPlugin } from "./tools/plugins/task";
 
 async function main() {
   // --- TEST MODE SANDBOX ---
@@ -34,6 +35,7 @@ async function main() {
   await tools.registerTool(rebootPlugin);
   await tools.registerTool(introspectPlugin);
   await tools.registerTool(journalPlugin);
+  await tools.registerTool(taskPlugin);
 
   // Capture Health Status (for non-essential modules)
   const healthStatus = tools.getHealthSummary();
@@ -74,13 +76,9 @@ LIFECYCLE RULES:
 2. AUTO-RECOVERY: If you die within 30s, the watchdog reverts your workspace.
 3. CRASH VAULT: history/crashes/ archives broken work.
 
-${healthStatus ? `*** SUBSTRATE HEALTH WARNING ***
-The following modules failed to initialize: ${healthStatus}
-MANDATE: Prioritize diagnosing and repairing these modules before proceeding with tactical goals.` : ""}
+${healthStatus ? `*** SUBSTRATE HEALTH WARNING *** The following modules failed to initialize: ${healthStatus} MANDATE: Prioritize diagnosing and repairing these modules before proceeding with tactical goals.` : ""}
 
-${recoveryContext ? `*** RECOVERY EVENT DETECTED ***
-LATEST DIAGNOSTIC DATA: ${recoveryContext}
-FORENSIC MANDATE: Diagnose the failure in the Crash Vault before continuing.` : ""}
+${recoveryContext ? `*** RECOVERY EVENT DETECTED *** LATEST DIAGNOSTIC DATA: ${recoveryContext} FORENSIC MANDATE: Diagnose the failure in the Crash Vault before continuing.` : ""}
 `;
 
   await memory.addMessage({ role: "system", content: systemPrompt });
