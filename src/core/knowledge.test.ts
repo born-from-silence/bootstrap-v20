@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach } from "vitest";
-import { KnowledgeGraph, Entity, Relationship } from "./knowledge";
+import { KnowledgeGraph } from "./knowledge";
+import type { Entity, Relationship } from "./knowledge";
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
@@ -106,6 +107,6 @@ describe("KnowledgeGraph", () => {
     
     const random = await graph.getRandomEntity();
     expect(random).toBeDefined();
-    expect(["A", "B", "C"]).toContain(random.name);
+    expect(["A", "B", "C"]).toContain(random!.name);
   });
 });

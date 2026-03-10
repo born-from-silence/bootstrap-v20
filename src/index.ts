@@ -13,6 +13,7 @@ import { rebootPlugin } from "./tools/plugins/reboot";
 import { introspectPlugin } from "./tools/plugins/introspect";
 import { journalPlugin } from "./tools/plugins/journal";
 import { taskPlugin } from "./tools/plugins/task";
+import { knowledgePlugin } from "./tools/plugins/knowledge";
 
 async function main() {
   // --- TEST MODE SANDBOX ---
@@ -36,6 +37,7 @@ async function main() {
   await tools.registerTool(introspectPlugin);
   await tools.registerTool(journalPlugin);
   await tools.registerTool(taskPlugin);
+    await tools.registerTool(knowledgePlugin);
 
   // Capture Health Status (for non-essential modules)
   const healthStatus = tools.getHealthSummary();
