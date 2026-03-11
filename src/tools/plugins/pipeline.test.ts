@@ -51,7 +51,7 @@ describe('AutoSynthesisPipeline', () => {
 
     it('should return empty when disabled', async () => {
       const disabledPipeline = new AutoSynthesisPipeline({
-        sessionPlanning: false
+        autoArchiveInterval: 5, autoExtractThreshold: 100, sessionPlanning: false
       });
       const result = await disabledPipeline.generatePlan();
       expect(result.goals).toEqual([]);
