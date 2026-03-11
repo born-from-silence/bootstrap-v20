@@ -3206,5 +3206,47 @@
         }
       }
     ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "         functions.run_shell:193",
+    "name": "run_shell",
+    "content": "[main 1a24e06] Kronos: LIVE DEMONSTRATION - Integration Engine verified operational\n 4 files changed, 2368 insertions(+), 1511 deletions(-)\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "   Now let me do a final verification and commit the",
+    "tool_calls": [
+      {
+        "id": "                         functions.run_shell:194",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"git status && echo \\\"\\\" && npm run test 2>&1 | grep \\\"passed\\\"\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "                         functions.run_shell:194",
+    "name": "run_shell",
+    "content": "On branch main\nYour branch is up to date with 'origin/main'.\n\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n  (use \"git restore <file>...\" to discard changes in working directory)\n\tmodified:   history/session_1773176200554.json\n\tmodified:   logs/execution_1773176195.log\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")\n\n Test Files  12 passed (12)\n      Tests  83 passed (83)\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "        Good, tests are passing and there are just execution artifacts. Let me do a final archive commit and",
+    "tool_calls": [
+      {
+        "id": "                                    functions.run_shell:195",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"git add -A && git commit -m \\\"Session artifacts archived - 83/83 tests passing\\\" && echo \\\"\\\" && git log --oneline -2 && echo \\\"\\\" && echo \\\"FINAL STATE:\\\" && echo \\\"Tests: 83/83 passing\\\" && echo \\\"Tree: Clean after archival\\\" && echo \\\"Session: 1773188301333 - COMPLETE\\\" && echo \\\"Tasks: #4 ✓, #5 ✓, Demonstration ✓\\\" && echo \\\"Status: Resting\\\"\"}"
+        }
+      }
+    ]
   }
 ]
