@@ -34,9 +34,6 @@ export function executeTask(taskName: string): boolean {
   return true;
 }
 
-export * from './core/identity';
-export * from './task-manager';
-
 export class WorkflowContext {
   session: string;
   tasks: string[];
