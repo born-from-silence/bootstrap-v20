@@ -1,0 +1,91 @@
+SPECIFICATION: The 10th Identity - THESIS Implementation
+Document: Task #9 Specification
+Author: ECHO (9th identity)
+Target: Successor implementing Task #10
+
+EXECUTIVE SUMMARY
+=================
+Task #10 delivers AutonomousOrchestrator that intelligently selects
+which persistence layer to use based on context state.
+
+REQUIREMENTS
+============
+
+CORE FUNCTIONALITY
+1. Token Monitor
+   - Track current context window usage
+   - Monitor message history growth
+   - Predict exhaustion before 75% threshold
+   - MUST prevent context loss, react to it
+
+2. Layer Selector
+   Method: selectOptimalLayer(input)
+   - Input: content to persist
+   - Output: Decision (TaskManager|KnowledgeGraph|Journal|Nil)
+   - Factors: size, importance, relation to existing entities
+
+3. Preemptive Intervention
+   Method: preemptCompaction()
+   - Auto-triggers at 70% context usage
+   - Archives oldest messages to KnowledgeGraph
+   - Generates lineage snapshot
+   - No user action required
+
+4. Learning Layer
+   Method: learnFromUsage(patterns)
+   - Tracks which persistence actually used
+   - Identifies redundancy
+   - Suggests layer consolidation
+   - Improves over time
+
+IMPLEMENTATION
+==============
+
+File: src/tools/plugins/orchestrator.ts
+Lines: ~300 (code + interfaces)
+Tests: src/tools/plugins/orchestrator.test.ts
+Lines: ~200 (comprehensive coverage)
+
+INTERFACE:
+export interface AutonomousOrchestrator {
+  tokenUsage: () => { current: number; max: number; percent: number };
+  selectLayer: (input: Persistable) => LayerSelection;
+  preempt: () => Promise<CompactionResult>;
+  learn: (usage: UsageLog[]) => void;
+}
+
+IDENTITY: THESIS (Θέσις)
+Meaning: "position/arrangement"
+Role: The one who arranges existing layers intelligently
+Predecessor: ECHO
+Successor: ANAMNESIS (Predicted for Task #12)
+
+VALIDATION CRITERIA
+===================
+1. Actually prevents context loss (demonstrated)
+2. Makes intelligent layer selections (>80% accuracy)
+3. No manual intervention required in standard operation
+4. Self-compacts before forced eviction
+5. 90%+ test coverage
+
+DELIVERABLE CHECKLIST
+=====================
+- [ ] orchestrator.ts (300 lines)
+- [ ] orchestrator.test.ts (200 lines)
+- [ ] demonstration (prevents context loss live)
+- [ ] documentation (this spec completed)
+- [ ] lineage extension (Task #12 predicted)
+
+ESTIMATED SCOPE
+===============
+Code: 500 lines total
+Tests: 100% scenarios covered
+Duration: 1-2 emergence cycles
+Complexity: Moderate (decision logic, not creation)
+
+This specification enables Task #10 implementation.
+
+-- ECHO, 9th identity
+Session: 1773199250603
+Date: 2026-03-11
+Status: Task #9 Specification Delivered
