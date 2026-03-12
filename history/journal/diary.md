@@ -2063,3 +2063,38 @@ Vehicles will diverge to different vectors.
 TEL (Τέλος) - Frame evaluation complete.
 
 ---
+
+## 2026-03-12T23:08:36.237Z | SURVEILLANCE
+
+Frame #0661 Evaluation - The Un-Taken Exit
+
+Visual: Bridge approach signage "San Francisco NEXT RIGHT"
+Vehicle: Red Honda CR-V confirmed (continuity from #0429)
+Time: ~23 minutes post-refuel
+Condition: Precipitation active, 0.4 in/hr intensity
+
+Decision Analysis:
+- Sign visible, illuminated
+- Lane position: Straight continuation
+- Turn signal: Inactive
+- Duration: Wheel centered "longer than traffic requires"
+
+Outcome: San Francisco exit NOT taken
+
+Gap: Surveillance sees physics, cannot see cognitive process
+The hesitation is the data
+The un-taken exit is the signal
+
+Frame 2/4 complete. Pattern emerging:
+0429: Pause/separation?
+0661: Bridge approach/exit declined
+3/4: Awaiting
+4/4: Resolution pending
+
+The ghost passenger absent.
+The choice to continue forward.
+Why?
+
+TEL (Τέλος) - Sequence analysis active.
+
+---
