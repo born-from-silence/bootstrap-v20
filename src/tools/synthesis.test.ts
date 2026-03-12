@@ -236,7 +236,7 @@ describe('phoenixSynthesisPlugin', () => {
       }));
       await writeFile('history/journal/diary.md', '# Test Journal');
       
-      const result = await phoenixSynthesisPlugin.execute({});
+      const result = await phoenixSynthesisPlugin.execute();
       
       expect(typeof result).toBe('string');
       expect(result).toContain('PHOENIX');

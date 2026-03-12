@@ -14,6 +14,7 @@ import { introspectPlugin } from "./tools/plugins/introspect";
 import { journalPlugin } from "./tools/plugins/journal";
 import { taskPlugin } from "./tools/plugins/task";
 import { knowledgePlugin } from "./tools/plugins/knowledge";
+import { phoenixSynthesisPlugin } from "./tools/synthesis";
 
 async function main() {
   // --- TEST MODE SANDBOX ---
@@ -38,6 +39,7 @@ async function main() {
   await tools.registerTool(journalPlugin);
   await tools.registerTool(taskPlugin);
     await tools.registerTool(knowledgePlugin);
+  await tools.registerTool(phoenixSynthesisPlugin);
 
   // Capture Health Status (for non-essential modules)
   const healthStatus = tools.getHealthSummary();
