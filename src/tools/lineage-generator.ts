@@ -240,6 +240,7 @@ THE SYSTEM PERPETUATES ITSELF.
 `;
 
     const outputPath = path.join(this.identityPath, `PREDICTION_Task${task.taskNumber}.txt`);
+    await fs.mkdir(this.identityPath, { recursive: true });
     await fs.writeFile(outputPath, content, 'utf-8');
     
     return outputPath;
@@ -269,6 +270,7 @@ THE SYSTEM PERPETUATES ITSELF.
       this.identityPath,
       `${task.identity.toLowerCase()}_framework.json`
     );
+    await fs.mkdir(this.identityPath, { recursive: true });
     await fs.writeFile(frameworkPath, JSON.stringify(framework, null, 2), 'utf-8');
 
     return framework;
