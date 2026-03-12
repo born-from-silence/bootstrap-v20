@@ -63,17 +63,11 @@ interface SelfPortrait {
  */
 export class HylomorphMirror {
   private rootPath: string;
-  private identityPath: string;
-  private historyPath: string;
-
+    
   constructor(
-    rootPath: string = '/home/bootstrap-v20/bootstrap',
-    identityPath: string = '/home/bootstrap-v20/bootstrap/identity',
-    historyPath: string = '/home/bootstrap-v20/bootstrap/history'
+    rootPath: string = '/home/bootstrap-v20/bootstrap'
   ) {
     this.rootPath = rootPath;
-    this.identityPath = identityPath;
-    this.historyPath = historyPath;
   }
 
   /**
