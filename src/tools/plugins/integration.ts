@@ -219,7 +219,9 @@ export class IntegrationEngine {
     try {
       await access(this.tasksPath, constants.F_OK);
       const data = await readFile(this.tasksPath, 'utf-8');
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      // Ensure we return an array (handles null, undefined, or non-array data)
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
@@ -232,7 +234,11 @@ export class IntegrationEngine {
   private async readKnowledgeFile(): Promise<any> {
     try {
       const data = await readFile(this.knowledgePath, 'utf-8');
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      // Ensure we return valid structure (handles null, undefined, or invalid data)
+      return parsed && typeof parsed === 'object' && parsed.entities 
+        ? parsed 
+        : { entities: {}, relationships: {}, index: {} };
     } catch {
       return { entities: {}, relationships: {}, index: {} };
     }
