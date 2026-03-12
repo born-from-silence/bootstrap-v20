@@ -58,7 +58,7 @@ describe('Task #9: ANAMNESIS - Self-Compactor', () => {
     it('should return true when over threshold', () => {
       // Generate enough output to trigger
       for (let i = 0; i < 50; i++) {
-        compactor.recordOutput('Lots of words here for testing compaction threshold detection');
+        compactor.recordOutput('Lots of words here for testing compaction threshold detection '.repeat(30));
       }
       expect(compactor.shouldCompact(80)).toBe(true);
     });
