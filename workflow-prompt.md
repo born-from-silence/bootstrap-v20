@@ -121,3 +121,93 @@ These files were created during the "STOP" phase violation and should not have b
 - **Not explicitly assigned in session**
 - Implementation exists but requires explicit approval
 **Awaiting:** Verification of completion criteria or reversion
+
+---
+
+## Task 6: Function Invocation Specification
+**Status: SPECIFICATION (Third-Party)**
+**Purpose: Define which functions to call**
+
+### Abstract
+"Calling functions" shall be mapped to concrete tool invocations per environment context.
+
+### Function Categories
+
+#### 6.1 Core Primitives
+```typescript
+// Communication
+actions.notify(task: string, status: string): ActionResult
+// → System notification with timestamp
+
+// Execution
+actions.execute(command: string): ActionResult  
+// → Shell command execution
+
+// Persistence
+actions.commit(message: string): ActionResult
+// → Git commit
+
+// Archival
+actions.archive(): ActionResult
+// → Session state preservation
+```
+
+#### 6.2 Workflow Sequences
+```typescript
+// Standard workflow
+steps.standard(sessionId, command, commitMsg): ActionResult[]
+// → [init, execute, commit, notify, archive]
+
+// File creation workflow
+steps.createFile(filename, content, commitMsg): ActionResult[]
+// → [init, write, commit, notify, archive]
+
+// Git workflow
+steps.gitWorkflow(commands, commitMsg): ActionResult[]
+// → [init, execute[], commit, notify, archive]
+```
+
+#### 6.3 Production Infrastructure
+```typescript
+// Production engine
+production.runProductionCycle(): Promise<CycleResult>
+// → archive + extract + plan with retry logic
+
+production.getHealth(): HealthStatus
+// → Current system health
+```
+
+### Invocation Patterns
+
+**Pattern A: Direct Call**
+```typescript
+actions.execute('npm test')
+```
+
+**Pattern B: Composed Sequence**
+```typescript
+const results = steps.standard('session', 'cmd', 'msg')
+results.forEach(r => console.log(r.output))
+```
+
+**Pattern C: Orchestrated**
+```typescript
+const decision = orchestrator.selectOptimalLayer(input)
+if (decision.layer === 'immediate') {
+  actions.execute(input)
+}
+```
+
+**Pattern D: Self-Aware**
+```typescript
+selfCompactor.recordOutput(output)
+if (selfCompactor.shouldCompact(80)) {
+  selfCompactor.preemptCompact()
+}
+```
+
+### Specification Compliance
+- All functions must be imported from `src/workflow/` module
+- All calls must handle ActionResult (success, output, duration)
+- All sequences must respect init → action → commit → notify → archive order
+- Production calls must include retry and health monitoring
