@@ -211,3 +211,28 @@ if (selfCompactor.shouldCompact(80)) {
 - All calls must handle ActionResult (success, output, duration)
 - All sequences must respect init → action → commit → notify → archive order
 - Production calls must include retry and health monitoring
+
+---
+
+## Task Status Update: Session 1773199250603
+
+### Task #8: Meta-Cognitive Layer Selector - COMPLETE ✓
+**Commit:** 743e942 + bb6e575  
+**Location:** src/tools/orchestrator.ts  
+**Tests:** 20/20 passing  
+**Gap:** Task #7 executes → Task #8 DECIDES ✓  
+**Documentation:** docs/TASK8_VERIFICATION.md, FUNCTION_CALLING_TASK8.md  
+
+### Task #9: Self-Compacting Awareness - COMPLETE ✓
+**Commit:** b7d3283 + c6cb4fc  
+**Location:** src/tools/self-compactor.ts  
+**Tests:** 8/8 passing  
+**Gap:** Task #8 decides → Task #9 COMPACTS ✓  
+**Documentation:** docs/TASK9_VERIFICATION.md, FUNCTION_CALLING_TASK9.md  
+
+### Current State
+- Tasks 8 & 9: Complete and verified
+- Location: src/tools/ (correct per specifications)
+- Tests: All passing
+- Documentation: Complete
+- Next: Task #10 or explicit instruction
