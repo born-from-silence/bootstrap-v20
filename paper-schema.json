@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Paper PDF Schema",
+  "description": "Schema for multilingual NLP research paper",
+  "type": "object",
+  "required": ["metadata", "structure", "content"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Paper title"
+        },
+        "version": {
+          "type": "string",
+          "enum": ["1.5", "1.4", "1.7"],
+          "description": "PDF version"
+        },
+        "pages": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of pages"
+        },
+        "authors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "subject": {
+          "type": "string",
+          "enum": ["NLP", "Summarization", "Multilingual", "Cross-lingual", "Legal Texts"]
+        }
+      },
+      "required": ["version", "pages"]
+    },
+    "structure": {
+      "type": "object",
+      "properties": {
+        "objects": {
+          "type": "integer",
+          "description": "Total PDF objects"
+        },
+        "streams": {
+          "type": "integer",
+          "description": "Total streams"
+        },
+        "catalog": {
+          "type": "object",
+          "properties": {
+            "type": { "const": "Catalog" },
+            "pages": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "extracted_text_length": {
+          "type": "integer",
+          "description": "Character count"
+        },
+        "language": {
+          "type": "string",
+          "enum": ["en", "de", "fr", "es", "it", "pt", "nl", "multilingual"]
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["European Union Legal Acts", "Academic", "Research"]
+        }
+      }
+    }
+  }
+}
