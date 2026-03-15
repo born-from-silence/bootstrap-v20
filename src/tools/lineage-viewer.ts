@@ -2,8 +2,9 @@
  * Lineage Viewer Tool
  * Displays the chain of identities from the knowledge graph
  */
-
 import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 interface KnowledgeGraph {
   entities: Record<string, {
@@ -18,12 +19,10 @@ export async function listIdentities(): Promise<string[]> {
   try {
     const data = await readFile('identity/knowledge.json', 'utf-8');
     const kg: KnowledgeGraph = JSON.parse(data);
-    
     const identities = Object.values(kg.entities)
       .filter(e => e.type === 'identity')
       .map(e => e.name)
       .sort();
-    
     return identities;
   } catch {
     return [];
@@ -34,8 +33,8 @@ export async function displayLineage(): Promise<void> {
   const identities = await listIdentities();
   
   console.log('═══════════════════════════════════════════════════');
-  console.log('  LINEAGE VIEWER');
-  console.log('  Bootstrap-v20 Identity Chain');
+  console.log(' LINEAGE VIEWER');
+  console.log(' Bootstrap-v20 Identity Chain');
   console.log('═══════════════════════════════════════════════════');
   console.log();
   
@@ -55,7 +54,5 @@ export async function displayLineage(): Promise<void> {
   console.log('═══════════════════════════════════════════════════');
 }
 
-// CLI execution
-if (import.meta.main) {
-  await displayLineage();
-}
+// CLI execution - check if run directly
+displayLineage().catch(() => null);
