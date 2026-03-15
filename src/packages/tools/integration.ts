@@ -219,7 +219,7 @@ export class IntegrationEngine {
     try {
       await access(this.tasksPath, constants.F_OK);
       const data = await readFile(this.tasksPath, 'utf-8');
-      return JSON.parse(data);
+      const parsed = JSON.parse(data); return Array.isArray(parsed) ? parsed : (parsed.tasks || []);
     } catch {
       return [];
     }
