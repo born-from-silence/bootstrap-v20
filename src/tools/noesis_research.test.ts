@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { NOESISResearch, ResearchTopic, ResearchSession } from './noesis_research';
+import { NOESISResearch, type ResearchTopic, type ResearchSession } from './noesis_research';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as os from 'os';
@@ -27,7 +27,7 @@ describe('NOESIS Research Engine', () => {
   afterEach(async () => {
     // Cleanup
     try {
-      await fs.rmdir(testDir, { recursive: true });
+      await fs.rm(testDir, { recursive: true, force: true });
     } catch (e) {
       // Ignore cleanup errors
     }

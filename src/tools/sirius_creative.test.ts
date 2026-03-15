@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeAll } from 'vitest';
-import { generateMandala, generatePoem, CreativeConfig, CreativeResult } from './sirius_creative';
+import { generateMandala, generatePoem, type CreativeConfig, type CreativeResult } from './sirius_creative';
 
 describe('SIRIUS Creative Engine v1.0', () => {
   let testSession: string;
