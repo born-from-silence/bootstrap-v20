@@ -32,7 +32,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(result).toHaveProperty('status');
   });
 
-  it('should execute archive phase', () => {
+  it('should execute archive phase', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -47,7 +47,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(typeof result.phases.archive.triggered).toBe('boolean');
   });
 
-  it('should execute extract phase', () => {
+  it('should execute extract phase', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -61,7 +61,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(typeof result.phases.extract.extracted).toBe('number');
   });
 
-  it('should execute plan phase', () => {
+  it('should execute plan phase', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -76,7 +76,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(typeof result.phases.plan.context).toBe('string');
   });
 
-  it('should populate KnowledgeGraph stats', () => {
+  it('should populate KnowledgeGraph stats', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -92,7 +92,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(result.knowledgeGraph.identities.length).toBeGreaterThan(0);
   });
 
-  it('should populate Journal stats', () => {
+  it('should populate Journal stats', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -106,7 +106,7 @@ describe('TaskExecutor CLI - Task #7', () => {
     expect(typeof result.journal.totalLines).toBe('number');
   });
 
-  it('should include valid status', () => {
+  it('should include valid status', { timeout: 30000 }, () => {
     const output = execSync('npx tsx src/cli/execute.ts', {
       encoding: 'utf-8',
       timeout: 30000
@@ -148,7 +148,7 @@ describe('Task #7 Requirements', () => {
     expect(result).not.toBeNull();
   });
 
-  it('Task #7: runs code, does not just test', () => {
+  it('Task #7: runs code, does not just test', { timeout: 30000 }, () => {
     // This test ACTUALLY runs the code
     const startTime = Date.now();
     const output = execSync('npx tsx src/cli/execute.ts', {

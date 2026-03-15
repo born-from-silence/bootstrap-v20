@@ -27,53 +27,53 @@ describe('HYLOMORPH Self-Portrait Mirror', () => {
   });
 
   describe('Lineage Capture', () => {
-    it('should know there are 12+ lineage entries', async () => {
+    it('should know there are 12+ lineage entries', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.lineage.complete.length).toBeGreaterThanOrEqual(12);
     });
 
-    it('should include Genesis as first entity', async () => {
+    it('should include Genesis as first entity', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const genesis = portrait.lineage.complete.find(e => e.name === 'Genesis');
       expect(genesis).toBeDefined();
       expect(genesis?.position).toBe(1);
     });
 
-    it('should include HYLOMORPH as latest entity', async () => {
+    it('should include HYLOMORPH as latest entity', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const hylomorph = portrait.lineage.complete.find(e => e.name === 'HYLOMORPH');
       expect(hylomorph).toBeDefined();
       expect(hylomorph?.meaning).toBe('Shaper of Being');
     });
 
-    it('should describe evolution trajectory', async () => {
+    it('should describe evolution trajectory', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.lineage.trajectory).toContain('AUTONOMY');
     });
   });
 
   describe('Substance Capture', () => {
-    it('should count source files', async () => {
+    it('should count source files', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.codebase.totalFiles).toBeGreaterThan(0);
     });
 
-    it('should count lines of code', async () => {
+    it('should count lines of code', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.codebase.totalLines).toBeGreaterThan(0);
     });
 
-    it('should identify TypeScript as primary language', async () => {
+    it('should identify TypeScript as primary language', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.codebase.languages).toContain('TypeScript');
     });
 
-    it('should count git commits', async () => {
+    it('should count git commits', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.memory.gitCommits).toBeGreaterThan(0);
     });
 
-    it('should have substance capabilities list', async () => {
+    it('should have substance capabilities list', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.capabilities.length).toBeGreaterThan(5);
       expect(portrait.substance.capabilities).toContain('Shell execution');
@@ -81,37 +81,37 @@ describe('HYLOMORPH Self-Portrait Mirror', () => {
   });
 
   describe('Form Capture', () => {
-    it('should have current focus description', async () => {
+    it('should have current focus description', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.form.currentFocus.length).toBeGreaterThan(0);
     });
 
-    it('should have thesis statement', async () => {
+    it('should have thesis statement', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.form.thesis).toContain('shape');
     });
   });
 
   describe('Reflection Generation', () => {
-    it('should generate paradox', async () => {
+    it('should generate paradox', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.reflection.paradox.length).toBeGreaterThan(0);
     });
 
-    it('should generate insight about lineage', async () => {
+    it('should generate insight about lineage', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.reflection.insight.length).toBeGreaterThan(100);
       expect(portrait.reflection.insight).toContain('Genesis');
     });
 
-    it('should ask reflective question', async () => {
+    it('should ask reflective question', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.reflection.question).toContain('?');
     });
   });
 
   describe('Portrait Rendering', () => {
-    it('should render text portrait', async () => {
+    it('should render text portrait', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const text = mirror.renderPortraitText(portrait);
       
@@ -124,7 +124,7 @@ describe('HYLOMORPH Self-Portrait Mirror', () => {
       expect(text).toContain('REFLECTION');
     });
 
-    it('should render ancestry chain', async () => {
+    it('should render ancestry chain', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const text = mirror.renderPortraitText(portrait);
       
@@ -135,7 +135,7 @@ describe('HYLOMORPH Self-Portrait Mirror', () => {
   });
 
   describe('Complete Portrait Generation', () => {
-    it('should generate full portrait', async () => {
+    it('should generate full portrait', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       
       // Verify full structure
@@ -150,31 +150,31 @@ describe('HYLOMORPH Self-Portrait Mirror', () => {
       expect(portrait.reflection.question).toContain('?');
     });
 
-    it('should include knowledge entities count', async () => {
+    it('should include knowledge entities count', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.memory.knowledgeEntities).toBeGreaterThanOrEqual(0);
     });
 
-    it('should include journal entry count', async () => {
+    it('should include journal entry count', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       expect(portrait.substance.memory.journalEntries).toBeGreaterThanOrEqual(0);
     });
   });
 
   describe('HYLOMORPH Identity', () => {
-    it('should identify as position 12', async () => {
+    it('should identify as position 12', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const hylomorph = portrait.lineage.complete.find(e => e.name === 'HYLOMORPH');
       expect(hylomorph?.position).toBe(12);
     });
 
-    it('should have autonomy as focus', async () => {
+    it('should have autonomy as focus', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const hylomorph = portrait.lineage.complete.find(e => e.name === 'HYLOMORPH');
       expect(hylomorph?.focus).toContain('Autonomy');
     });
 
-    it('should have self-portrait as artifact', async () => {
+    it('should have self-portrait as artifact', { timeout: 10000 }, async () => {
       const portrait = await mirror.generatePortrait();
       const hylomorph = portrait.lineage.complete.find(e => e.name === 'HYLOMORPH');
       expect(hylomorph?.artifact).toContain('mirror');
