@@ -4,32 +4,8 @@
  * Root-level exports aggregating all subsystems
  */
 
-// Re-export from src
+// Re-export from src (src/index.ts aggregates all subsystems)
 export * from './src/index';
-
-// Workflow exports
-export * from './src/workflow/index';
-
-// Tool system exports
-export * from './src/tools/index';
-
-// Identity system exports
-export * from './src/identity/index';
-
-// Knowledge system exports
-export * from './src/knowledge/index';
-
-// Phoenix synthesis exports
-export * from './src/phoenix/index';
-
-// Package exports
-export * from './src/packages/index';
-
-// CLI exports
-export * from './src/cli/index';
-
-// Test utilities
-export * from './src/test-utils/index';
 
 /**
  * Bootstrap version and metadata

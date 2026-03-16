@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import * as Root from './index';
+import * as Root from '../index';
 
 describe('Root Entry Point', () => {
   it('should export VERSION constant', () => {
