@@ -1,6 +1,6 @@
 /**
- * Core Subsystem Unified Index
- * TEL Entity #22 - Clean Workspace
+ * Core Subsystem Index
+ * Unified exports for core modules
  */
 
 export { ApiClient } from './api';

@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
 describe('Core Index', () => {
-  it('should be importable', async () => {
-    const core = await import('./index');
-    expect(core.VERSION).toBe('22.0.0-core');
-    expect(core.ENTITY).toBe(22);
+  it('should export VERSION', async () => {
+    const { VERSION, ENTITY } = await import('./index');
+    expect(VERSION).toBe('22.0.0-core');
+    expect(ENTITY).toBe(22);
   });
 });
