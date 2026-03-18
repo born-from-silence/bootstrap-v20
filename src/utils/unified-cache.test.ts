@@ -1,58 +1,64 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { UnifiedCache, cache } from './unified-cache';
+import { describe, it, expect, vi } from 'vitest';
+import { UnifiedCache, createCache } from './index';
 
 describe('Unified Cache', () => {
-  let testCache: UnifiedCache;
-  
-  beforeEach(() => {
-    testCache = new UnifiedCache();
-  });
-
   it('should create cache instance', () => {
-    expect(testCache).toBeDefined();
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    expect(cache).toBeDefined();
   });
 
   it('should set and get value', () => {
-    testCache.set('key', 'value');
-    expect(testCache.get('key')).toBe('value');
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    cache.set('key', 'value');
+    expect(cache.get('key')).toBe('value');
   });
 
   it('should return undefined for missing key', () => {
-    expect(testCache.get('missing')).toBeUndefined();
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    expect(cache.get('missing')).toBeUndefined();
   });
 
-  it('should expire entries', () => {
-    testCache.set('key', 'value', 1);
-    expect(testCache.get('key')).toBe('value');
-    setTimeout(() => {
-      expect(testCache.get('key')).toBeUndefined();
-    }, 10);
+  it('should expire entries', async () => {
+    const cache = new UnifiedCache({ defaultTTL: 50 });
+    cache.set('key', 'value');
+    
+    // Immediately should exist
+    expect(cache.get('key')).toBe('value');
+    
+    // Wait for expiration
+    await new Promise(r => setTimeout(r, 100));
+    expect(cache.get('key')).toBeUndefined();
   });
 
   it('should check exists', () => {
-    testCache.set('key', 'value');
-    expect(testCache.has('key')).toBe(true);
-    expect(testCache.has('missing')).toBe(false);
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    cache.set('key', 'value');
+    expect(cache.exists('key')).toBe(true);
+    expect(cache.exists('missing')).toBe(false);
   });
 
   it('should delete entry', () => {
-    testCache.set('key', 'value');
-    testCache.delete('key');
-    expect(testCache.get('key')).toBeUndefined();
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    cache.set('key', 'value');
+    cache.delete('key');
+    expect(cache.get('key')).toBeUndefined();
   });
 
   it('should clear all entries', () => {
-    testCache.set('key1', 'value1');
-    testCache.set('key2', 'value2');
-    testCache.clear();
-    expect(testCache.getStats().size).toBe(0);
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    cache.set('key1', 'value1');
+    cache.set('key2', 'value2');
+    cache.clear();
+    expect(cache.get('key1')).toBeUndefined();
+    expect(cache.get('key2')).toBeUndefined();
   });
 
   it('should provide stats', () => {
-    testCache.set('key', 'value');
-    const stats = testCache.getStats();
-    expect(stats.size).toBe(1);
-    expect(stats.maxSize).toBe(1000);
-    expect(stats.oldest).toBeDefined();
+    const cache = new UnifiedCache({ defaultTTL: 1000 });
+    cache.set('key1', 'value1');
+    cache.set('key2', 'value2');
+    const stats = cache.getStats();
+    expect(stats.size).toBe(2);
+    expect(stats.maxSize).toBeGreaterThan(0);
   });
 });

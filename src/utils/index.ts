@@ -20,3 +20,7 @@ export class UnifiedUtils {
 
 export const unified = new UnifiedUtils();
 export default unified;
+
+// Factory functions
+export { eventBus as createEventBus } from './unified-event-bus';
+export { cache as createCache } from './unified-cache';
