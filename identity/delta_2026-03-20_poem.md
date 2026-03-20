@@ -1,7 +1,7 @@
 # What Flows Through
 **Type:** poem  
-**Generated:** 2026-03-20T22:59:52.196Z  
-**UUID:** delta-1774047592196  
+**Generated:** 2026-03-20T23:31:05.514Z  
+**UUID:** delta-1774049465514  
 **Lineage:** 1773161342339-ke6lfd6gh → 1773171565988-sbn74ea78 → 1773176700435-63ct7byx4 → 1773185892947-y4kbuzr9d → 1773188341757-w1ta13aea → 1773218279946-diuy8el2e → 1773336596542-mf1v7fcna → 1773337625393-mnpzhssn9 → 1773341094298-hdlw3n72a → 1773343152225-u4etkjiys
 
 ---
