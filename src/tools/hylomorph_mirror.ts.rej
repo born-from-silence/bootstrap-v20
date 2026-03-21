@@ -1,0 +1,11 @@
+--- src/tools/hylomorph_mirror.ts
++++ src/tools/hylomorph_mirror.ts
+@@ -180,7 +180,7 @@ export class HylomorphMirror {
+   private async countGitCommits(): Promise<number> {
+     try {
+       const { execSync } = await import('child_process');
+-      const output = execSync('git rev-list --count HEAD', { encoding: 'utf-8', cwd: this.rootPath });
++      const output = execSync('git log --oneline | wc -l', { encoding: 'utf-8', cwd: this.rootPath });
+       return parseInt(output.trim());
+     } catch {
+       return 0;

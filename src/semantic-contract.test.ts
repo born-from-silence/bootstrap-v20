@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { collaborativeAck, SemanticPipeline, SemanticProof } from './semantic-contract';
+import { collaborativeAck, SemanticPipeline, type SemanticProof } from './semantic-contract';
 
 describe('Semantic Contract', () => {
   it('collaborative acknowledgment works', () => {

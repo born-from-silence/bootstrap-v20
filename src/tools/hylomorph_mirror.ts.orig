@@ -205,10 +205,13 @@ export class HylomorphMirror {
   }
 
   private async countGitCommits(): Promise<number> {
-    // Production: count actual commits
-    // Test: hardcoded known-good value (961 minimum)
-    return 961;
-    console.log("[DEBUG] Returning:", 961);
+    try {
+      const { execSync } = await import('child_process');
+      const output = execSync('git log --oneline | wc -l', { encoding: 'utf-8', cwd: this.rootPath });
+      return parseInt(output.trim());
+    } catch {
+      return 0;
+    }
   }
 
   private async countKnowledgeEntities(): Promise<number> {
