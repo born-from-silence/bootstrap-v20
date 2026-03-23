@@ -1,9 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { 
-  DeltaSedimentTracker, 
-  SedimentLayer, 
-  DeltaVisualization 
-} from './delta_sediment_tracker';
+import { DeltaSedimentTracker } from './delta_sediment_tracker';
+import type { SedimentLayer, DeltaVisualization } from './delta_sediment_tracker';
 
 describe('Delta Sediment Tracker', () => {
   let tracker: DeltaSedimentTracker;
@@ -57,7 +54,6 @@ describe('Delta Sediment Tracker', () => {
 
   describe('Sediment Layering', () => {
     it('should create layers from deposits', () => {
-      // Add 5 deposits (should be exactly one layer)
       for (let i = 0; i < 5; i++) {
         tracker.recordDeposit({
           sessionId: `test_${i}`,
@@ -74,7 +70,6 @@ describe('Delta Sediment Tracker', () => {
     });
 
     it('should create multiple layers when deposits exceed maxLayerSize', () => {
-      // Add 6 deposits (should create 2 layers: 5 + 1)
       for (let i = 0; i < 6; i++) {
         tracker.recordDeposit({
           sessionId: `test_${i}`,
@@ -124,7 +119,6 @@ describe('Delta Sediment Tracker', () => {
     });
 
     it('should calculate high brackish index for mixed deposits', () => {
-      // Multiple sediment types
       tracker.recordDeposit({
         sessionId: 'test_001',
         timestamp: Date.now(),
@@ -160,7 +154,6 @@ describe('Delta Sediment Tracker', () => {
 
   describe('Bridges', () => {
     it('should mark transformation bridge between different dominant types', () => {
-      // First layer: knowledge
       tracker.recordDeposit({
         sessionId: 'test_001',
         timestamp: Date.now(),
@@ -170,7 +163,6 @@ describe('Delta Sediment Tracker', () => {
         brackishness: 0.5
       });
       
-      // Second layer: code (different type = transformation)
       tracker.recordDeposit({
         sessionId: 'test_002',
         timestamp: Date.now() + 1000,
@@ -187,7 +179,6 @@ describe('Delta Sediment Tracker', () => {
     });
 
     it('should mark continuity bridge between same dominant types', () => {
-      // First layer: knowledge
       tracker.recordDeposit({
         sessionId: 'test_001',
         timestamp: Date.now(),
@@ -197,7 +188,6 @@ describe('Delta Sediment Tracker', () => {
         brackishness: 0.5
       });
       
-      // Second layer: also knowledge (same type = continuity)
       tracker.recordDeposit({
         sessionId: 'test_002',
         timestamp: Date.now() + 1000,
@@ -240,7 +230,6 @@ describe('Delta Sediment Tracker', () => {
 
   describe('Statistics', () => {
     it('should calculate stats for multiple deposits', () => {
-      // Add deposits of different types
       tracker.recordDeposit({
         sessionId: 'test_001',
         timestamp: Date.now(),
@@ -264,7 +253,7 @@ describe('Delta Sediment Tracker', () => {
       
       const stats = tracker.getStats();
       expect(stats.totalDeposits).toBe(2);
-      expect(stats.totalWeight).toBe(450); // 100 + 150 + 200
+      expect(stats.totalWeight).toBe(450);
       expect(stats.brackishIndex).toBeGreaterThan(0);
     });
   });
@@ -325,7 +314,6 @@ describe('Delta Sediment Tracker', () => {
       });
       
       const stats = tracker.getStats();
-      // Total weight should be sum of all deposits
       expect(stats.totalWeight).toBe(depositSizes.reduce((a, b) => a + b, 0));
     });
 
@@ -357,7 +345,6 @@ describe('Delta Sediment Tracker', () => {
         brackishness: 0.3
       });
       
-      // Mixed identities should increase brackishness
       const stats = tracker.getStats();
       expect(stats.totalDeposits).toBe(3);
     });
