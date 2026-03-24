@@ -1,7 +1,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { callExternalAPI, diagnoseBridge } from './position22_external_api';
 
+// Mock fetch for testing
+const originalFetch = global.fetch;
+global.fetch = vi.fn();
+
 describe('Position22 External API', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+  
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
   describe('callExternalAPI', () => {
     it('should reject when bridge is closed', async () => {
       const bridgeState = { state: 'closed', external: null };
@@ -38,7 +49,13 @@ describe('Position22 External API', () => {
 
     it('should measure request duration', async () => {
       const bridgeState = { state: 'open', external: { state: 'active', id: 'test' } };
-      const startTime = Date.now();
+      
+      // Mock fetch to return quickly
+      vi.mocked(global.fetch).mockResolvedValueOnce(new Response(JSON.stringify({status: 'ok'}), {
+        status: 200,
+        headers: { 'content-type': 'application/json' }
+      }));
+      
       const result = await callExternalAPI(bridgeState, {
         endpoint: '/health',
         method: 'GET'
@@ -49,13 +66,19 @@ describe('Position22 External API', () => {
 
     it('should handle GET requests', async () => {
       const bridgeState = { state: 'open', external: { state: 'active', id: 'test' } };
+      
+      // Mock successful response
+      vi.mocked(global.fetch).mockResolvedValueOnce(new Response(JSON.stringify({status: 'ok'}), {
+        status: 200,
+        headers: { 'content-type': 'application/json' }
+      }));
+      
       const result = await callExternalAPI(bridgeState, {
         endpoint: '/health',
         method: 'GET'
       });
       
-      // May fail due to no actual endpoint, but validates structure
-      expect(['success', 'error', 'timeout']).toContain(result.status);
+      expect(result.status).toBe('success');
     });
 
     it('should handle POST requests with payload', async () => {

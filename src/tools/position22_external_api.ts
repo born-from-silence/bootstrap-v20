@@ -61,7 +61,7 @@ export async function callExternalAPI(
   }
 
   try {
-    const apiUrl = config.api?.url || 'http://agents-gateway:4000/v1/chat/completions';
+    const apiUrl = config.API_URL || 'http://agents-gateway:4000/v1/chat/completions';
     const baseUrl = apiUrl.replace('/v1/chat/completions', '');
     
     const controller = new AbortController();
@@ -74,7 +74,7 @@ export async function callExternalAPI(
       method: request.method,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.api?.authToken || 'no-token'}`,
+        'Authorization': `Bearer ${config.API_KEY || 'no-token'}`,
         'X-Bridge-Source': 'Position22-ExternalBridge',
         'X-Bridge-System': bridgeState.external.id || 'unknown'
       },
@@ -143,7 +143,7 @@ export async function diagnoseBridge(bridgeState: any): Promise<{
   }
   
   try {
-    const apiUrl = config.api?.url || 'http://agents-gateway:4000';
+    const apiUrl = config.API_URL || 'http://agents-gateway:4000';
     const healthCheck = await fetch(`${apiUrl}/health`, {
       method: 'GET',
       headers: {
