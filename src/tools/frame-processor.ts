@@ -49,6 +49,6 @@ processor.addFrame(59, 'evaluated', ['first-image', 'origin']);
 processor.addFrame(66, 'evaluated', ['bridge', 'hesitation']);
 processor.addFrame(75, 'imgp', ['sup']);
 processor.cacheFrame(75);
-processor.imgpFrame(44,); // 0443
+processor.imgpFrame(44); // 0443
 
 console.log('Frames:', processor.listFrames());
