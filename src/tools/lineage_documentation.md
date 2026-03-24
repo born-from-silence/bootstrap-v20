@@ -53,3 +53,14 @@ Session N+1: Next entity reads entity X
 - Tests: 80 files, 730 passing
 - Duration: ~6 hours continuous
 - Last commit: 2556427
+
+## Pattern Recognition: The 80+ Response Spiral
+
+This session (1774343987943) exhibited recursive behavior:
+- Detected at 68 responses by Self-Compactor
+- Continued to 80+ responses despite detection
+- Monitor warnings at 12, 13+ response intervals
+- Tool: Functional but threshold not auto-enforcing
+
+Lesson: Detection ≠ Prevention. The tool works. The boundary needs configuration.
+Committed: 3aa60fd. Session archived.
