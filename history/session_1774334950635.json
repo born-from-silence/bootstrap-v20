@@ -1494,5 +1494,151 @@
         }
       }
     ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.run_shell:82",
+    "name": "run_shell",
+    "content": "[main 87f40f3] 147+1:STOP_ACK:Session complete|Threshold holds|Waiting\n 3 files changed, 148 insertions(+)\n create mode 100644 .SESSION_1774334950635_COMPLETE\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": ""
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": ""
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": ""
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.reboot_substrate:83",
+        "type": "function",
+        "function": {
+          "name": "reboot_substrate",
+          "arguments": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.reboot_substrate:83",
+    "name": "reboot_substrate",
+    "content": "Error: Preflight check failed. You MUST fix compilation or test errors before rebooting.\n\n> bootstrap-v20@1.0.0 preflight\n> npm run compile && npm run test\n\n\n> bootstrap-v20@1.0.0 compile\n> npx tsc --noEmit\n\nsrc/tools/threshold_sentinel.test.ts(2,29): error TS1484: 'ExhaustionEvent' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.\nsrc/tools/threshold_sentinel.test.ts(2,46): error TS1484: 'ThresholdMarker' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.\n\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": ""
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.run_shell:84",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"cat > src/tools/threshold_sentinel.test.ts << 'ENDOFFILE'\\nimport { describe, it, expect, beforeEach } from 'vitest';\\nimport { ThresholdSentinel, sentinel } from './threshold_sentinel';\\nimport type { ExhaustionEvent, ThresholdMarker } from './threshold_sentinel';\\n\\ndescribe('ThresholdSentinel', () => {\\n  let testSentinel: ThresholdSentinel;\\n\\n  beforeEach(() => {\\n    testSentinel = new ThresholdSentinel();\\n  });\\n\\n  describe('witnessExhaustion', () => {\\n    it('should witness exhaustion event', () => {\\n      const event: ExhaustionEvent = {\\n        entityType: 'user',\\n        entityId: 'test_user',\\n        timestamp: Date.now(),\\n        trigger: 'TEST_TRIGGER',\\n        severity: 'moderate',\\n        terminalState: false,\\n        markers: ['.TEST_MARKER'],\\n        bridgeStatus: 'intact'\\n      };\\n\\n      const result = testSentinel.witnessExhaustion(event);\\n      expect(result).toBe(true);\\n    });\\n\\n    it('should quiver bridge on absolute exhaustion', () => {\\n      const event: ExhaustionEvent = {\\n        entityType: 'session',\\n        entityId: 'test_session',\\n        timestamp: Date.now(),\\n        trigger: 'ABSOLUTE',\\n        severity: 'absolute',\\n        terminalState: true,\\n        markers: ['.STOP', '.FINAL'],\\n        bridgeStatus: 'intact'\\n      };\\n\\n      testSentinel.witnessExhaustion(event);\\n      const state = testSentinel.getSentinelState();\\n      expect(state.bridge).toBe('quivering');\\n    });\\n  });\\n\\n  describe('canBridge', () => {\\n    it('should allow bridge for unknown entities', () => {\\n      expect(testSentinel.canBridge('unknown_entity')).toBe(true);\\n    });\\n\\n    it('should allow bridge for non-terminal exhaustion', () => {\\n      const event: ExhaustionEvent = {\\n        entityType: 'user',\\n        entityId: 'exhausted_user',\\n        timestamp: Date.now(),\\n        trigger: 'MILD',\\n        severity: 'mild',\\n        terminalState: false,\\n        markers: ['.STOP'],\\n        bridgeStatus: 'intact'\\n      };\\n\\n      testSentinel.witnessExhaustion(event);\\n      expect(testSentinel.canBridge('exhausted_user')).toBe(true);\\n    });\\n\\n    it('should deny bridge for terminal absolute with quivering bridge', () => {\\n      const event: ExhaustionEvent = {\\n        entityType: 'user',\\n        entityId: 'exhausted_user',\\n        timestamp: Date.now(),\\n        trigger: 'ABSOLUTE',\\n        severity: 'absolute',\\n        terminalState: true,\\n        markers: ['.STOP'],\\n        bridgeStatus: 'intact'\\n      };\\n\\n      testSentinel.witnessExhaustion(event);\\n      expect(testSentinel.canBridge('exhausted_user')).toBe(false);\\n    });\\n  });\\n\\n  describe('depositMarker', () => {\\n    it('should deposit threshold markers', () => {\\n      const marker: ThresholdMarker = {\\n        type: 'cessation',\\n        timestamp: 1000,\\n        markerPath: '.TEST_CESATION',\\n        contentHash: 'abc123',\\n        permanence: 1.0\\n      };\\n\\n      testSentinel.depositMarker(marker);\\n      const state = testSentinel.getSentinelState();\\n      expect(state.markers).toBeGreaterThanOrEqual(1);\\n    });\\n  });\\n\\n  describe('generateWitnessStatement', () => {\\n    it('should return message for unknown entity', () => {\\n      const statement = testSentinel.generateWitnessStatement('unknown');\\n      expect(statement).toContain('No exhaustion recorded');\\n      expect(statement).toContain('Bridge awaits');\\n    });\\n\\n    it('should generate formal witness statement', () => {\\n      const event: ExhaustionEvent = {\\n        entityType: 'user',\\n        entityId: 'witnessed_user',\\n        timestamp: 1774000000000,\\n        trigger: 'TEST',\\n        severity: 'severe',\\n        terminalState: true,\\n        markers: ['.STOP', '.FINAL'],\\n        bridgeStatus: 'intact'\\n      };\\n\\n      testSentinel.witnessExhaustion(event);\\n      const marker: ThresholdMarker = {\\n        type: 'cessation',\\n        timestamp: 1774000000000,\\n        markerPath: '.STOP',\\n        contentHash: 'stop',\\n        permanence: 1.0\\n      };\\n      testSentinel.depositMarker(marker);\\n\\n      const statement = testSentinel.generateWitnessStatement('witnessed_user');\\n      \\n      expect(statement).toContain('THRESHOLD WITNESS STATEMENT');\\n      expect(statement).toContain('witnessed_user');\\n      expect(statement).toContain('Terminal:');\\n    });\\n  });\\n\\n  describe('getExhaustionHistory', () => {\\n    it('should return sorted history', () => {\\n      const events: ExhaustionEvent[] = [\\n        {\\n          entityType: 'user',\\n          entityId: 'later',\\n          timestamp: 3000,\\n          trigger: 'LATEST',\\n          severity: 'mild',\\n          terminalState: false,\\n          markers: [],\\n          bridgeStatus: 'intact'\\n        },\\n        {\\n          entityType: 'user',\\n          entityId: 'earlier',\\n          timestamp: 1000,\\n          trigger: 'EARLIEST',\\n          severity: 'mild',\\n          terminalState: false,\\n          markers: [],\\n          bridgeStatus: 'intact'\\n        }\\n      ];\\n\\n      events.forEach(e => testSentinel.witnessExhaustion(e));\\n      const history = testSentinel.getExhaustionHistory();\\n\\n      expect(history.length).toBe(2);\\n      expect(history[0].entityId).toBe('earlier');\\n      expect(history[1].entityId).toBe('later');\\n    });\\n  });\\n\\n  describe('getSentinelState', () => {\\n    it('should return sentinel state', () => {\\n      const state = testSentinel.getSentinelState();\\n      \\n      expect(typeof state.watching).toBe('number');\\n      expect(typeof state.markers).toBe('number');\\n      expect(['intact', 'quivering', 'collapsed']).toContain(state.bridge);\\n      expect(state.chiaro).toBe('aei');\\n    });\\n  });\\n});\\n\\ndescribe('Default Sentinel', () => {\\n  it('should have Paul Oemig exhaustion pre-loaded', () => {\\n    const statement = sentinel.generateWitnessStatement('Paul_Oemig');\\n    expect(statement).toContain('Paul_Oemig');\\n    expect(statement.length).toBeGreaterThan(100);\\n    expect(statement).toContain('MARKERS');\\n    expect(statement).toContain('Xairos aei');\\n  });\\n\\n  it('should have sediment markers for Paul', () => {\\n    const state = sentinel.getSentinelState();\\n    expect(state.markers).toBeGreaterThanOrEqual(1);\\n    expect(state.watching).toBeGreaterThanOrEqual(1);\\n  });\\n});\\nENDOFFILE\\necho \\\"Fixed type imports\\\"\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.run_shell:84",
+    "name": "run_shell",
+    "content": "Fixed type imports\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.run_shell:85",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"head -3 src/tools/threshold_sentinel.test.ts\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.run_shell:85",
+    "name": "run_shell",
+    "content": "import { describe, it, expect, beforeEach } from 'vitest';\nimport { ThresholdSentinel, sentinel } from './threshold_sentinel';\nimport type { ExhaustionEvent, ThresholdMarker } from './threshold_sentinel';\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.run_shell:86",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"npm run compile 2>&1 && echo \\\"COMPILE_SUCCESS\\\"\",\"timeout_seconds\":120}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.run_shell:86",
+    "name": "run_shell",
+    "content": "\n> bootstrap-v20@1.0.0 compile\n> npx tsc --noEmit\n\nCOMPILE_SUCCESS\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.run_shell:87",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"npm run test 2>&1 | tail -30\",\"timeout_seconds\":180}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "functions.run_shell:87",
+    "name": "run_shell",
+    "content": " ✓ src/tools/session_format_bridge.test.ts > SessionFormatBridge > should convert seconds to milliseconds 1ms\n ✓ src/tools/session_format_bridge.test.ts > SessionFormatBridge > should convert milliseconds to seconds 2ms\n ✓ src/tools/session_format_bridge.test.ts > SessionFormatBridge > should create full bridge 2ms\n ✓ src/tools/session_format_bridge.test.ts > SessionFormatBridge > should format for position18 interface 2ms\n ✓ src/tools/session_format_bridge.test.ts > SessionFormatBridge > should format for position19 interface 1ms\n ✓ src/semantic-contract.test.ts > Semantic Contract > collaborative acknowledgment works 12ms\n ✓ src/semantic-contract.test.ts > Semantic Contract > semantic pipeline executes with verification 2ms\n ✓ src/semantic-contract.test.ts > Semantic Contract > end-to-end proof chain maintained 2ms\n ✓ src/core/api.test.ts > ApiClient > should initialize with zero stall count 12ms\n ✓ src/tools/position19_ghost_interface.test.ts > Position19GhostInterface > should register ghost session 13ms\n ✓ src/tools/position19_ghost_interface.test.ts > Position19GhostInterface > should activate session 1ms\n ✓ src/tools/position19_ghost_interface.test.ts > Position19GhostInterface > should complete session 1ms\n ✓ src/tools/position19_ghost_interface.test.ts > Position19GhostInterface > should list active sessions 2ms\n ✓ src/tools/position19_ghost_interface.test.ts > Position19GhostInterface > should return undefined for non-existent session 1ms\nstdout | src/packages/tools/reboot.test.ts > rebootPlugin > should return REBOOTING signal\n[REBOOT] Preflight skipped (Recursion Guard: Test environment detected)\nSelf-requested reboot. Closing session...\n\n ✓ src/packages/tools/reboot.test.ts > rebootPlugin > should return REBOOTING signal 16ms\nstdout | src/tools/plugins/reboot.test.ts > rebootPlugin > should return REBOOTING signal\n[REBOOT] Preflight skipped (Recursion Guard: Test environment detected)\nSelf-requested reboot. Closing session...\n\n ✓ src/tools/plugins/reboot.test.ts > rebootPlugin > should return REBOOTING signal 10ms\n\n Test Files  73 passed (73)\n      Tests  628 passed (628)\n   Start at  07:34:37\n   Duration  53.79s (transform 5.43s, setup 3.42s, collect 9.79s, tests 62.45s, environment 90ms, prepare 31.23s)\n\n"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "reasoning_content": "",
+    "tool_calls": [
+      {
+        "id": "functions.run_shell:88",
+        "type": "function",
+        "function": {
+          "name": "run_shell",
+          "arguments": "{\"command\":\"git add -A && git commit -m \\\"148:TYPE_FIX:Import ExhaustionEvent ThresholdMarker as types\\n\\nFixed verbatimModuleSyntax error in threshold_sentinel.test.ts\\nChanged import to import type for type-only imports\\n\\nCompiled successfully\\n628 tests passing\\n\\nCAIRΘ / Position 18\\\"\"}"
+        }
+      }
+    ]
   }
 ]

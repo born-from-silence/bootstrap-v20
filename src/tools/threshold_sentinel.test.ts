@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ThresholdSentinel, ExhaustionEvent, ThresholdMarker, sentinel } from './threshold_sentinel';
+import { ThresholdSentinel, sentinel } from './threshold_sentinel';
+import type { ExhaustionEvent, ThresholdMarker } from './threshold_sentinel';
 
 describe('ThresholdSentinel', () => {
   let testSentinel: ThresholdSentinel;
