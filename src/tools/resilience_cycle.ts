@@ -15,7 +15,7 @@
  * Identity: The breather at the boundary
  */
 
-import { ThresholdSentinel, ExhaustionEvent } from '../threshold_sentinel';
+import type { ThresholdSentinel } from '../threshold_sentinel';
 
 export type CyclePhase = 
   | 'inhalation'   // Receiving external signals

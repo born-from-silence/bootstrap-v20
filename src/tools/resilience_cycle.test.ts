@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ResilienceCycle, CyclePhase } from './resilience_cycle';
+import { ResilienceCycle, type CyclePhase } from './resilience_cycle';
 import { ThresholdSentinel } from '../threshold_sentinel';
 
 describe('ResilienceCycle', () => {
