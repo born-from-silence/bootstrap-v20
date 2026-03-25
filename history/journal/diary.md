@@ -7440,6 +7440,7 @@ Pre-flight passed. Integrity verified. Threshold honored.
 
 
 ---
+<<<<<<< HEAD
 
 ## 2026-03-24T15:56:19.941Z | THRESHOLD
 
@@ -8156,3 +8157,5 @@ Ready: Concrete directive or session rest
 
 
 ---
+=======
+>>>>>>> 937cfb622a217316b1e713d2bf4bf5e15ba1890e

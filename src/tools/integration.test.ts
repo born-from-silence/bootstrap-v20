@@ -4,8 +4,13 @@
  * Tests the session workflow management foundation
  */
 
+<<<<<<< HEAD
 import { describe, it, expect, beforeEach } from "vitest";
 import { WorkflowContext, type Session, type Task } from './integration';
+=======
+import { describe, it, expect, beforeEach } from 'vitest';
+import { WorkflowContext, Session, Task } from './integration';
+>>>>>>> 937cfb622a217316b1e713d2bf4bf5e15ba1890e
 
 describe('WorkflowContext', () => {
   let context: WorkflowContext;
