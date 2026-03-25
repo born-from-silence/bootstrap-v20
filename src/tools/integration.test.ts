@@ -1,16 +1,10 @@
 /**
  * WorkflowContext Integration Tests
- * 
+ *
  * Tests the session workflow management foundation
  */
-
-<<<<<<< HEAD
 import { describe, it, expect, beforeEach } from "vitest";
 import { WorkflowContext, type Session, type Task } from './integration';
-=======
-import { describe, it, expect, beforeEach } from 'vitest';
-import { WorkflowContext, Session, Task } from './integration';
->>>>>>> 937cfb622a217316b1e713d2bf4bf5e15ba1890e
 
 describe('WorkflowContext', () => {
   let context: WorkflowContext;
@@ -47,7 +41,6 @@ describe('WorkflowContext', () => {
       context.addTask('First task');
       context.addTask('Second task');
       context.addTask('Third task');
-      
       const status = context.getStatus();
       expect(status.pending).toBe(3);
     });
@@ -55,7 +48,6 @@ describe('WorkflowContext', () => {
     it('should complete task with output', () => {
       context.addTask('Test task');
       context.completeTask('task-0', 'Task output data');
-      
       const task = context.session.tasks.find(t => t.id === 'task-0');
       expect(task?.status).toBe('complete');
       expect(task?.output).toBe('Task output data');
@@ -64,7 +56,6 @@ describe('WorkflowContext', () => {
     it('should complete task without output', () => {
       context.addTask('Test task');
       context.completeTask('task-0');
-      
       const task = context.session.tasks.find(t => t.id === 'task-0');
       expect(task?.status).toBe('complete');
       expect(task?.output).toBeUndefined();
@@ -81,7 +72,6 @@ describe('WorkflowContext', () => {
       context.addTask('Task 2');
       context.addTask('Task 3');
       context.completeTask('task-0');
-      
       const status = context.getStatus();
       expect(status.pending).toBe(2);
       expect(status.complete).toBe(1);
@@ -92,7 +82,6 @@ describe('WorkflowContext', () => {
       context.addTask('Task to complete');
       let status = context.getStatus();
       expect(status.complete).toBe(0);
-      
       context.completeTask('task-0');
       status = context.getStatus();
       expect(status.complete).toBe(1);
@@ -111,7 +100,6 @@ describe('WorkflowContext', () => {
       const task1 = context.addTask('First');
       const task2 = context.addTask('Second');
       const task3 = context.addTask('Third');
-      
       expect(task1.id).toBe('task-0');
       expect(task2.id).toBe('task-1');
       expect(task3.id).toBe('task-2');
@@ -147,7 +135,6 @@ describe('WorkflowContext', () => {
       context.addTask('Test task');
       context.completeTask('task-0', 'First output');
       context.completeTask('task-0', 'Second output');
-      
       const task = context.session.tasks.find(t => t.id === 'task-0');
       expect(task?.status).toBe('complete');
       expect(task?.output).toBe('Second output'); // Last write wins
@@ -159,7 +146,6 @@ describe('Session Interface', () => {
   it('should allow session status updates', () => {
     const context = new WorkflowContext('test');
     expect(context.session.status).toBe('active');
-    
     // Session status can be modified (exposed for flexibility)
     context.session.status = 'complete';
     expect(context.session.status).toBe('complete');
@@ -169,7 +155,6 @@ describe('Session Interface', () => {
     const context = new WorkflowContext('test');
     context.session.commits.push('abc123');
     context.session.commits.push('def456');
-    
     expect(context.session.commits).toHaveLength(2);
     expect(context.session.commits).toContain('abc123');
   });
